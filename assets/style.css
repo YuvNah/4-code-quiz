@@ -1,0 +1,36 @@
+:root {
+  --brown: #a88f82;
+  --tan: #f5e1d5;
+  --teal: #71a8a7;
+  --lightteal: #d5f5f5;
+  --light: #fffaf7;
+}
+
+header {
+  background-color: var(--lightteal);
+  padding: 4px;
+  display: block;
+}
+
+header h4 {
+  text-align: end;
+  padding-right: 8px;
+}
+
+#game-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+h1 {
+  font-size: 36px;
+  color: var(--teal);
+}
+
+.answer-options li {
+  border: solid 1px var(--brown);
+  padding: 5px;
+  margin: 3px;
+}
