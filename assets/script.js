@@ -5,9 +5,9 @@ var questionIndex = 0;
 
 var questions = [
   {
-    question: "What is the capital of United Kingdom?",
-    choices: ["Manchester", "Birmingham", "London"],
-    answer: "Birmingham",
+    question: "What is not a common data type?",
+    choices: ["Strings", "Boleans", "alerts", "numbers"],
+    answer: "Boleans",
   },
 
   {
@@ -33,28 +33,21 @@ function quiz() {
 
   var listEl = document.createElement("ol");
 
-  //   var li1 = document.createElement("li");
-  //   li1.textContent = "Strings";
-  //   var li2 = document.createElement("li");
-  //   li2.textContent = "Boleans";
-  //   var li3 = document.createElement("li");
-  //   li3.innerText = "Alerts";
-  //   var li4 = document.createElement("li");
-  //   li4.textContent = "Numbers";
-
   questionEl.appendChild(question1);
   questionEl.appendChild(listEl);
-  //   listEl.appendChild(li2);
-  //   listEl.appendChild(li3);
-  //   listEl.appendChild(li4);
 
-  var liEl = document.querySelectorAll("li");
   for (var i = 0; i < questions[questionIndex].choices.length; i++) {
     var li = document.createElement("li");
     li.textContent = questions[questionIndex].choices[i];
     li.classList.add("li-class");
     listEl.appendChild(li);
+    var liEl = document.querySelectorAll("li");
   }
+
+  function test() {
+    console.log("test");
+  }
+  listEl.addEventListener("click", test);
 }
 
 //countdown function - a countdown on the top right side of the page to signify the number pf seconds left to finish the quiz.
