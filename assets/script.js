@@ -53,17 +53,18 @@ function quiz() {
   var answerChoice = document.querySelectorAll(".li-class");
 
   // this function will call the next question after the user answered the last, regardless of right or wrong answer
-  function nextQuestion(event) {
-    console.log("test");
 
-    for (var i = 0; i < questionList[questionIndex].question.length; i++) {
-      question1.textContent = questionList[i].question;
+  function nextQuestion(event) {
+    questionIndex++;
+    for (var i = 0; i < questionList.length; i++) {
+      question1.textContent = questionList[questionIndex].question;
     }
     questionEl.appendChild(question1);
   }
   for (let i = 0; i < 4; i++) {
     answerChoice[i].addEventListener("click", nextQuestion);
   }
+
   // if correct answer add "corect" under the next question
   //if wrong answer add "wrong" and deduct time off the timer
   // when out of questions time = 0 and the time left = points
