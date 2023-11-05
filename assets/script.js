@@ -130,15 +130,16 @@ function quiz() {
     stopTimer();
   }
   //local storage of the user points
-  var userScore = timeLeft + userPoints;
-  let storedPoints = localStorage.getItem("userPoints");
+  localStorage.setItem("userTime", timeLeft.toString());
+  var userScore =
+    localStorage.getItem("userPoints") + localStorage.getItem("userTime");
+  // var userScore = timeLeft + userPoints;
   console.log(userScore);
 }
+
 function startQuiz() {
   countdown();
   quiz();
 }
 //event listeners
 startBtn.addEventListener("click", startQuiz);
-// startBtn.addEventListener("click", countdown);
-// startBtn.addEventListener("click", quiz);
