@@ -64,9 +64,23 @@ function quiz() {
       doneEL.textContent = "all done!";
       questionEl.append(doneEL);
     }
+    function correctAnswer() {
+      var correctTitle = document.createElement("h2");
+      correctTitle.classList.add("responseClass");
+      correctTitle.textContent = "correct";
+    }
   }
   for (let i = 0; i < 4; i++) {
     answerChoice[i].addEventListener("click", nextQuestion);
+    answerChoice[i].addEventListener("click", function (event) {
+      var userAnswer = event.target.textContent;
+
+      if (userAnswer === questionList[questionIndex].answer) {
+        console.log("yay");
+      } else {
+        console.log("oops");
+      }
+    });
   }
 
   // if correct answer add "corect" under the next question
