@@ -97,6 +97,8 @@ function quiz() {
     questionEl.append(highScoreTitle);
     var highScoreList = document.createElement("ol");
     questionEl.append(highScoreList);
+    var highScores = document.createElement("il");
+    highScores.textContent = localStorage.getItem("userInitial");
   }
 
   // this function will pause the timer, present the user score and create a form to save the score
