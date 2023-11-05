@@ -28,27 +28,46 @@ function deductTime() {
 
 function stopTimer() {
   clearInterval(timeInterval);
+  localStorage.setItem("userTime", timeLeft.toString());
 }
 
 function quiz() {
   //question list - the object that contains the quiz questions
   var questionList = [
     {
-      question: "What is not a common data type?",
-      choices: ["Strings", "Boleans", "alerts", "numbers"],
-      answer: "Boleans",
+      question: "Commonly used data types do NOT include:",
+      choices: ["Strings", "Boleans", "Alerts", "numbers"],
+      answer: "Alerts",
     },
 
     {
-      question: "What is the capital of United States?",
-      choices: ["DC", "New York", "Miami", "Florida"],
-      answer: "DC",
+      question:
+        "The condition in an if/ else statemet is enclosed with ______ ",
+      choices: ["quotes", "curly bracktes", "parenthesis", "square brackets"],
+      answer: "parenthesis",
     },
 
     {
-      question: "another question",
-      choices: ["1", "2", "3", "4"],
-      answer: "4",
+      question:
+        "A very useful tool used during development and debugging for printing content to the debugger is:",
+      choices: ["JavaScript", "Terminal/Bash", "for loops", "consol.log"],
+      answer: "console.log",
+    },
+    {
+      question: "Arrays in JavaScript can be used to store _______",
+      choices: [
+        "Numbers and Strings",
+        "Other arrays",
+        "Booleans",
+        "all of the above",
+      ],
+      answer: "all of the above",
+    },
+    {
+      question:
+        "String Values must be enclosed within _____ when being assiend to variables.",
+      choices: ["Commas", "Curly brackets", "Quotes", "Parethesis"],
+      answer: "Quotes",
     },
   ];
 
@@ -130,7 +149,6 @@ function quiz() {
     stopTimer();
   }
   //local storage of the user points
-  localStorage.setItem("userTime", timeLeft.toString());
   var userScore =
     localStorage.getItem("userPoints") + localStorage.getItem("userTime");
   // var userScore = timeLeft + userPoints;
