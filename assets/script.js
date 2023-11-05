@@ -3,6 +3,7 @@ var startBtn = document.querySelector("#start-button");
 var timerEL = document.querySelector("#time");
 var questionEl = document.getElementById("game-section");
 var questionIndex = 0;
+var responseDiv = document.getElementById("response");
 
 // the quiz function - contains the questions (objects) and the functionality of the changing questions and the right and wrong
 function quiz() {
@@ -64,23 +65,37 @@ function quiz() {
       doneEL.textContent = "all done!";
       questionEl.append(doneEL);
     }
-    function correctAnswer() {
-      var correctTitle = document.createElement("h2");
-      correctTitle.classList.add("responseClass");
-      correctTitle.textContent = "correct";
-    }
   }
   for (let i = 0; i < 4; i++) {
-    answerChoice[i].addEventListener("click", nextQuestion);
+    function correctAnswer() {
+      responseDiv.innerText = "";
+      var correctTitle = document.createElement("h2");
+      correctTitle.classList.add("responseClass");
+      correctTitle.textContent = "Correct";
+      responseDiv.append(correctTitle);
+    }
+    function wrongAnswer() {
+      responseDiv.innerText = "";
+      var wrongTitle = document.createElement("h2");
+      wrongTitle.classList.add("responseClass");
+      wrongTitle.textContent = "Wrong";
+      responseDiv.append(wrongTitle);
+    }
     answerChoice[i].addEventListener("click", function (event) {
       var userAnswer = event.target.textContent;
 
+      console.log(userAnswer);
+
       if (userAnswer === questionList[questionIndex].answer) {
         console.log("yay");
+        correctAnswer();
       } else {
         console.log("oops");
+        wrongAnswer();
       }
+      nextQuestion();
     });
+    // answerChoice[i].addEventListener("click", nextQuestion);
   }
 
   // if correct answer add "corect" under the next question
