@@ -90,6 +90,15 @@ function quiz() {
   }
   var answerChoice = document.querySelectorAll(".li-class");
 
+  function highScorePage() {
+    questionEl.innerHTML = "";
+    var highScoreTitle = document.createElement("h2");
+    highScoreTitle.textContent = "High Scores";
+    questionEl.append(highScoreTitle);
+    var highScoreList = document.createElement("ol");
+    questionEl.append(highScoreList);
+  }
+
   // this function will pause the timer, present the user score and create a form to save the score
   function endQuiz() {
     questionEl.innerHTML = "";
@@ -97,10 +106,10 @@ function quiz() {
     var doneEL = document.createElement("h1");
     doneEL.textContent = "All Done!";
     var scoreEL = document.createElement("h3");
-    scoreEL.textContent = "Your final score is" + userScore;
+    scoreEL.textContent = "Your final score is " + userScore;
     var userNameForm = document.createElement("form");
     userNameForm.setAttribute("method", "post");
-    userNameForm.setAttribute("action", "submit.php");
+    // userNameForm.setAttribute("action", highScorePage);
     var userName = document.createElement("input");
     userName.setAttribute("type", "text");
     userName.setAttribute("name", "FullName");
@@ -113,6 +122,9 @@ function quiz() {
     questionEl.append(userNameForm);
     userNameForm.append(userName);
     userNameForm.append(submitBtn);
+
+    submitBtn.addEventListener("click", highScorePage);
+    localStorage.setItem("userInitial", userName);
 
     //local storage of the user points
     localStorage.setItem("userPoints", userPoints.toString());
