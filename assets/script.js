@@ -2,6 +2,7 @@ var startBtn = document.querySelector("#start-button");
 var timerEL = document.querySelector("#time");
 var questionEl = document.getElementById("game-section");
 var questionIndex = 0;
+var answerDic = document.getElementById("answers");
 
 // console.log(questions[1].choices[2]);
 
@@ -60,6 +61,10 @@ function quiz() {
       question1.textContent = questionList[questionIndex].question;
     }
     questionEl.appendChild(question1);
+    for (var i = 0; i < questionList[questionIndex].choices.length; i++) {
+      answerChoice.textContent = questionList[questionIndex].choices[i];
+    }
+    questionEl.appendChild(listEl);
   }
   for (let i = 0; i < 4; i++) {
     answerChoice[i].addEventListener("click", nextQuestion);
