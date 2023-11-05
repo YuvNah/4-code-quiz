@@ -5,11 +5,12 @@ var questionEl = document.getElementById("game-section");
 var questionIndex = 0;
 var responseDiv = document.getElementById("response");
 var userPoints = 0;
+var timeLeft = 75;
+var userScore = timeLeft + userPoints;
 
+// the quiz function - contains the questions (objects) and the functionality of the changing questions and the right and wrong
 //countdown function - a countdown on the top right side of the page to signify the number pf seconds left to finish the quiz.
 function countdown() {
-  var timeLeft = 75;
-
   var timeInterval = setInterval(function () {
     if (timeLeft > 0) {
       timerEL.textContent = timeLeft;
@@ -20,8 +21,14 @@ function countdown() {
     }
   }, 1000);
 }
+function deductTime() {
+  timeLeft -= 5;
+}
 
-// the quiz function - contains the questions (objects) and the functionality of the changing questions and the right and wrong
+function stopTimer() {
+  clearInterval(timeInterval);
+}
+
 function quiz() {
   //question list - the object that contains the quiz questions
   var questionList = [
@@ -81,11 +88,11 @@ function quiz() {
       var doneEL = document.createElement("h1");
       doneEL.textContent = "all done!";
       questionEl.append(doneEL);
+      stopTimer();
     }
   }
 
   //local storage of the user points
-  localStorage.setItem("userPoints", userPoints.toString());
   let storedPoints = localStorage.getItem("userPoints");
 
   function correctAnswer() {
@@ -95,6 +102,7 @@ function quiz() {
     correctTitle.textContent = "Correct";
     responseDiv.append(correctTitle);
     userPoints++;
+    localStorage.setItem("userPoints", userPoints.toString());
   }
   function wrongAnswer() {
     responseDiv.innerText = "";
@@ -102,6 +110,7 @@ function quiz() {
     wrongTitle.classList.add("responseClass");
     wrongTitle.textContent = "Wrong";
     responseDiv.append(wrongTitle);
+    deductTime();
   }
 
   for (let i = 0; i < 4; i++) {
