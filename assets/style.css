@@ -6,6 +6,10 @@
   --light: #fffaf7;
 }
 
+main {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
 header {
   background-color: var(--lightteal);
   padding: 4px;
@@ -41,4 +45,9 @@ h1 {
   margin: 3px;
   list-style: none;
   background-color: var(--lightteal);
+}
+
+.responseClass {
+  color: var(--tan);
+  font-style: italic;
 }

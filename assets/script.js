@@ -28,7 +28,7 @@ function deductTime() {
 
 function stopTimer() {
   clearInterval(timeInterval);
-  localStorage.setItem("userTime", timeLeft.toString());
+  // localStorage.setItem("userTime", timeLeft.toString());
 }
 
 function quiz() {
@@ -87,9 +87,45 @@ function quiz() {
     li.textContent = questionList[questionIndex].choices[i];
     li.classList.add("li-class");
     listEl.appendChild(li);
-    var liEl = document.querySelectorAll("li");
   }
   var answerChoice = document.querySelectorAll(".li-class");
+
+  // this function will pause the timer, present the user score and create a form to save the score
+  function endQuiz() {
+    questionEl.innerHTML = "";
+    stopTimer();
+    var doneEL = document.createElement("h1");
+    doneEL.textContent = "All Done!";
+    var scoreEL = document.createElement("h3");
+    scoreEL.textContent = "Your final score is" + userScore;
+    var userNameForm = document.createElement("form");
+    userNameForm.setAttribute("method", "post");
+    userNameForm.setAttribute("action", "submit.php");
+    var userName = document.createElement("input");
+    userName.setAttribute("type", "text");
+    userName.setAttribute("name", "FullName");
+    userName.setAttribute("placeholder", "Enter your Intial here");
+    var submitBtn = document.createElement("input");
+    submitBtn.setAttribute("type", "submit");
+    submitBtn.setAttribute("value", "Submit");
+    questionEl.append(doneEL);
+    questionEl.append(scoreEL);
+    questionEl.append(userNameForm);
+    userNameForm.append(userName);
+    userNameForm.append(submitBtn);
+
+    //local storage of the user points
+    localStorage.setItem("userPoints", userPoints.toString());
+    localStorage.setItem("userTime", timeLeft.toString());
+
+    var userScore =
+      localStorage.getItem("userPoints") + localStorage.getItem("userTime");
+
+    console.log(userScore);
+
+    // // var userScore = timeLeft + userPoints;
+    // console.log(userScore);
+  }
 
   // this function will call the next question after the user answered the last, regardless of right or wrong answer
   function nextQuestion(event) {
@@ -104,11 +140,7 @@ function quiz() {
       }
       questionEl.appendChild(listEl);
     } else {
-      questionEl.innerHTML = "";
-      var doneEL = document.createElement("h1");
-      doneEL.textContent = "all done!";
-      questionEl.append(doneEL);
-      stopTimer();
+      endQuiz();
     }
   }
 
@@ -119,7 +151,6 @@ function quiz() {
     correctTitle.textContent = "Correct";
     responseDiv.append(correctTitle);
     userPoints++;
-    localStorage.setItem("userPoints", userPoints.toString());
   }
   function wrongAnswer() {
     responseDiv.innerText = "";
@@ -148,11 +179,6 @@ function quiz() {
   if (questionIndex >= questionList.length) {
     stopTimer();
   }
-  //local storage of the user points
-  var userScore =
-    localStorage.getItem("userPoints") + localStorage.getItem("userTime");
-  // var userScore = timeLeft + userPoints;
-  console.log(userScore);
 }
 
 function startQuiz() {
