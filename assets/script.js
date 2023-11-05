@@ -1,15 +1,12 @@
+//main vars of the page
 var startBtn = document.querySelector("#start-button");
 var timerEL = document.querySelector("#time");
 var questionEl = document.getElementById("game-section");
 var questionIndex = 0;
-var answerDic = document.getElementById("answers");
 
-// console.log(questions[1].choices[2]);
-
-// for (var i = 0; i < questionList[questionIndex].choices.length; i++) {
-//   console.log(questions[questionIndex].choices[i]);
-// }
+// the quiz function - contains the questions (objects) and the functionality of the changing questions and the right and wrong
 function quiz() {
+  //question list - the object that contains the quiz questions
   var questionList = [
     {
       question: "What is not a common data type?",
@@ -29,21 +26,17 @@ function quiz() {
       answer: "4",
     },
   ];
-
+  // clearing the HTML
   questionEl.innerHTML = "";
-  // console.log(questionList[questionIndex].question);
-  // console.log(questionIndex);
-  // questionIndex++;
 
+  //declaring the question and answer options and appending them to the page
   var question1 = document.createElement("h2");
   question1.textContent = questionList[questionIndex].question;
-  //questionEl.textContent = document.body.appendChild(question1);
-
   var listEl = document.createElement("ol");
-
   questionEl.appendChild(question1);
   questionEl.appendChild(listEl);
 
+  // the for loop that creates li for the answer options - pulls from the questionList object
   for (var i = 0; i < questionList[questionIndex].choices.length; i++) {
     var li = document.createElement("li");
     li.textContent = questionList[questionIndex].choices[i];
@@ -54,17 +47,23 @@ function quiz() {
   var answerChoice = document.querySelectorAll(".li-class");
 
   // this function will call the next question after the user answered the last, regardless of right or wrong answer
-
   function nextQuestion(event) {
     questionIndex++;
-    for (var i = 0; i < questionList.length; i++) {
+    if (questionIndex < questionList.length) {
       question1.textContent = questionList[questionIndex].question;
+      questionEl.appendChild(question1);
+      questionEl.appendChild(question1);
+      var answers = document.querySelectorAll(".li-class");
+      for (let i = 0; i < 4; i++) {
+        answers[i].textContent = questionList[questionIndex].choices[i];
+      }
+      questionEl.appendChild(listEl);
+    } else {
+      questionEl.innerHTML = "";
+      var doneEL = document.createElement("h1");
+      doneEL.textContent = "all done!";
+      questionEl.append(doneEL);
     }
-    questionEl.appendChild(question1);
-    for (var i = 0; i < questionList[questionIndex].choices.length; i++) {
-      answerChoice.textContent = questionList[questionIndex].choices[i];
-    }
-    questionEl.appendChild(listEl);
   }
   for (let i = 0; i < 4; i++) {
     answerChoice[i].addEventListener("click", nextQuestion);
@@ -75,11 +74,6 @@ function quiz() {
   // when out of questions time = 0 and the time left = points
 
   // if ((event.target.textContent = questionList[questionIndex].answer)) {
-  //   console.log("yay");
-  // }
-  // }
-
-  // li.addEventListener("click", nextQuestion);
 }
 
 //countdown function - a countdown on the top right side of the page to signify the number pf seconds left to finish the quiz.
