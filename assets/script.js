@@ -4,6 +4,22 @@ var timerEL = document.querySelector("#time");
 var questionEl = document.getElementById("game-section");
 var questionIndex = 0;
 var responseDiv = document.getElementById("response");
+var userPoints = 0;
+
+//countdown function - a countdown on the top right side of the page to signify the number pf seconds left to finish the quiz.
+function countdown() {
+  var timeLeft = 75;
+
+  var timeInterval = setInterval(function () {
+    if (timeLeft > 0) {
+      timerEL.textContent = timeLeft;
+      timeLeft--;
+    } else {
+      timerEL.textContent = "0";
+      clearInterval(timeInterval);
+    }
+  }, 1000);
+}
 
 // the quiz function - contains the questions (objects) and the functionality of the changing questions and the right and wrong
 function quiz() {
@@ -17,8 +33,8 @@ function quiz() {
 
     {
       question: "What is the capital of United States?",
-      choices: ["California", "New York", "Miami", "Florida"],
-      answer: "California",
+      choices: ["DC", "New York", "Miami", "Florida"],
+      answer: "DC",
     },
 
     {
@@ -27,6 +43,7 @@ function quiz() {
       answer: "4",
     },
   ];
+
   // clearing the HTML
   questionEl.innerHTML = "";
 
@@ -66,58 +83,41 @@ function quiz() {
       questionEl.append(doneEL);
     }
   }
+
+  //local storage of the user points
+  localStorage.setItem("userPoints", userPoints.toString());
+  let storedPoints = localStorage.getItem("userPoints");
+
+  function correctAnswer() {
+    responseDiv.innerText = "";
+    var correctTitle = document.createElement("h2");
+    correctTitle.classList.add("responseClass");
+    correctTitle.textContent = "Correct";
+    responseDiv.append(correctTitle);
+    userPoints++;
+  }
+  function wrongAnswer() {
+    responseDiv.innerText = "";
+    var wrongTitle = document.createElement("h2");
+    wrongTitle.classList.add("responseClass");
+    wrongTitle.textContent = "Wrong";
+    responseDiv.append(wrongTitle);
+  }
+
   for (let i = 0; i < 4; i++) {
-    function correctAnswer() {
-      responseDiv.innerText = "";
-      var correctTitle = document.createElement("h2");
-      correctTitle.classList.add("responseClass");
-      correctTitle.textContent = "Correct";
-      responseDiv.append(correctTitle);
-    }
-    function wrongAnswer() {
-      responseDiv.innerText = "";
-      var wrongTitle = document.createElement("h2");
-      wrongTitle.classList.add("responseClass");
-      wrongTitle.textContent = "Wrong";
-      responseDiv.append(wrongTitle);
-    }
     answerChoice[i].addEventListener("click", function (event) {
       var userAnswer = event.target.textContent;
 
       console.log(userAnswer);
 
       if (userAnswer === questionList[questionIndex].answer) {
-        console.log("yay");
         correctAnswer();
       } else {
-        console.log("oops");
         wrongAnswer();
       }
       nextQuestion();
     });
-    // answerChoice[i].addEventListener("click", nextQuestion);
   }
-
-  // if correct answer add "corect" under the next question
-  //if wrong answer add "wrong" and deduct time off the timer
-  // when out of questions time = 0 and the time left = points
-
-  // if ((event.target.textContent = questionList[questionIndex].answer)) {
-}
-
-//countdown function - a countdown on the top right side of the page to signify the number pf seconds left to finish the quiz.
-function countdown() {
-  var timeLeft = 75;
-
-  var timeInterval = setInterval(function () {
-    if (timeLeft > 0) {
-      timerEL.textContent = timeLeft;
-      timeLeft--;
-    } else {
-      timerEL.textContent = "0";
-      clearInterval(timeInterval);
-    }
-  }, 1000);
 }
 
 //event listeners
