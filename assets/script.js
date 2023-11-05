@@ -6,12 +6,13 @@ var questionIndex = 0;
 var responseDiv = document.getElementById("response");
 var userPoints = 0;
 var timeLeft = 75;
-var userScore = timeLeft + userPoints;
 
 // the quiz function - contains the questions (objects) and the functionality of the changing questions and the right and wrong
 //countdown function - a countdown on the top right side of the page to signify the number pf seconds left to finish the quiz.
+
+var timeInterval;
 function countdown() {
-  var timeInterval = setInterval(function () {
+  timeInterval = setInterval(function () {
     if (timeLeft > 0) {
       timerEL.textContent = timeLeft;
       timeLeft--;
@@ -92,9 +93,6 @@ function quiz() {
     }
   }
 
-  //local storage of the user points
-  let storedPoints = localStorage.getItem("userPoints");
-
   function correctAnswer() {
     responseDiv.innerText = "";
     var correctTitle = document.createElement("h2");
@@ -127,8 +125,20 @@ function quiz() {
       nextQuestion();
     });
   }
-}
 
+  if (questionIndex >= questionList.length) {
+    stopTimer();
+  }
+  //local storage of the user points
+  var userScore = timeLeft + userPoints;
+  let storedPoints = localStorage.getItem("userPoints");
+  console.log(userScore);
+}
+function startQuiz() {
+  countdown();
+  quiz();
+}
 //event listeners
-startBtn.addEventListener("click", countdown);
-startBtn.addEventListener("click", quiz);
+startBtn.addEventListener("click", startQuiz);
+// startBtn.addEventListener("click", countdown);
+// startBtn.addEventListener("click", quiz);
