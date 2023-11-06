@@ -4,6 +4,8 @@ var timerEL = document.querySelector("#time");
 var questionEl = document.getElementById("game-section");
 var questionIndex = 0;
 var responseDiv = document.getElementById("response");
+var savedScores = JSON.parse(localStorage.getItem("userScore")) || [];
+
 // var userPoints = 0;
 var timeLeft = 75;
 
@@ -124,6 +126,17 @@ function quiz() {
     highScores.textContent = userInitial + userScore;
     // questionEl.append(highScores);
     questionEl.append(highScoreTbl);
+
+    //this is putting your initials and score into an object
+    var myScoreObj = {
+      initial: userInitial,
+      score: userScore,
+    };
+
+    //this will add it to your array
+    savedScores.push(myScoreObj);
+    localStorage.setItem(JSON.stringify("savedScores"), savedScores);
+    console.log(savedScores);
 
     var homeBtn = document.createElement("button");
     homeBtn.textContent = "Start Again";
