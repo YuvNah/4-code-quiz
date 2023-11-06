@@ -91,6 +91,8 @@ function quiz() {
   var answerChoice = document.querySelectorAll(".li-class");
 
   function highScorePage() {
+    var userInitial = document.querySelector("input[name=fullName]").value;
+
     questionEl.innerHTML = "";
     var highScoreTitle = document.createElement("h2");
     highScoreTitle.textContent = "High Scores";
@@ -105,6 +107,11 @@ function quiz() {
   function endQuiz() {
     questionEl.innerHTML = "";
     stopTimer();
+    var userScore =
+      parseInt(localStorage.getItem("userPoints")) +
+      parseInt(localStorage.getItem("userTime"));
+    console.log(userScore);
+
     var doneEL = document.createElement("h1");
     doneEL.textContent = "All Done!";
     var scoreEL = document.createElement("h3");
@@ -125,17 +132,15 @@ function quiz() {
     userNameForm.append(userName);
     userNameForm.append(submitBtn);
 
+    // submitBtn.addEventListener("click", function () {
+    //   highScorePage(userScore);
+    // });
     submitBtn.addEventListener("click", highScorePage);
     localStorage.setItem("userInitial", userName);
 
     //local storage of the user points
     localStorage.setItem("userPoints", userPoints.toString());
     localStorage.setItem("userTime", timeLeft.toString());
-
-    var userScore =
-      localStorage.getItem("userPoints") + localStorage.getItem("userTime");
-
-    console.log(userScore);
 
     // // var userScore = timeLeft + userPoints;
     // console.log(userScore);
