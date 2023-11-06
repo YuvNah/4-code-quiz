@@ -4,7 +4,7 @@ var timerEL = document.querySelector("#time");
 var questionEl = document.getElementById("game-section");
 var questionIndex = 0;
 var responseDiv = document.getElementById("response");
-var userPoints = 0;
+// var userPoints = 0;
 var timeLeft = 75;
 
 // the quiz function - contains the questions (objects) and the functionality of the changing questions and the right and wrong
@@ -90,26 +90,59 @@ function quiz() {
   }
   var answerChoice = document.querySelectorAll(".li-class");
 
-  function highScorePage() {
-    var userInitial = document.querySelector("input[name=fullName]").value;
+  function highScorePage(event) {
+    event.preventDefault();
+    var userInitial = document.getElementById("userNameId").value;
+
+    console.log(userInitial);
 
     questionEl.innerHTML = "";
+
     var highScoreTitle = document.createElement("h2");
     highScoreTitle.textContent = "High Scores";
     questionEl.append(highScoreTitle);
-    var highScoreList = document.createElement("ol");
-    questionEl.append(highScoreList);
-    var highScores = document.createElement("il");
-    highScores.textContent = localStorage.getItem("userInitial");
+
+    // high scores table elemnt: create and append
+    //create table elemnt
+    var highScoreTbl = document.createElement("table");
+    //create table row elemnt
+    var tblTitle = document.createElement("tr");
+    //create title row elemnt and fill it with initials and scores
+    var initialsTbl = document.createElement("th");
+    initialsTbl.textContent = "Initials";
+    var scoreTbl = document.createElement("th");
+    scoreTbl.textContent = "Score";
+    tblTitle.appendChild(initialsTbl);
+    tblTitle.appendChild(scoreTbl);
+    highScoreTbl.appendChild(tblTitle);
+    //create table bodyand append
+    var highScores = document.createElement("tbody");
+    var userScoreRow = document.createElement("tr");
+    highScoreTbl.appendChild(highScores);
+    highScoreTbl.appendChild(userScoreRow);
+
+    highScores.textContent = userInitial + userScore;
+    // questionEl.append(highScores);
+    questionEl.append(highScoreTbl);
+
+    var homeBtn = document.createElement("button");
+    homeBtn.textContent = "Start Again";
+    questionEl.append(homeBtn);
+
+    function home() {
+      // window.location.href = "original_page.html";
+      window.history.back();
+    }
+
+    homeBtn.addEventListener("click", home);
   }
 
+  var userScore = parseInt(localStorage.getItem("userTime"));
   // this function will pause the timer, present the user score and create a form to save the score
   function endQuiz() {
     questionEl.innerHTML = "";
     stopTimer();
-    var userScore =
-      parseInt(localStorage.getItem("userPoints")) +
-      parseInt(localStorage.getItem("userTime"));
+
     console.log(userScore);
 
     var doneEL = document.createElement("h1");
@@ -123,6 +156,7 @@ function quiz() {
     userName.setAttribute("type", "text");
     userName.setAttribute("name", "FullName");
     userName.setAttribute("placeholder", "Enter your Intial here");
+    userName.setAttribute("id", "userNameId");
     var submitBtn = document.createElement("input");
     submitBtn.setAttribute("type", "submit");
     submitBtn.setAttribute("value", "Submit");
@@ -132,14 +166,11 @@ function quiz() {
     userNameForm.append(userName);
     userNameForm.append(submitBtn);
 
-    // submitBtn.addEventListener("click", function () {
-    //   highScorePage(userScore);
-    // });
     submitBtn.addEventListener("click", highScorePage);
     localStorage.setItem("userInitial", userName);
 
     //local storage of the user points
-    localStorage.setItem("userPoints", userPoints.toString());
+    // localStorage.setItem("userPoints", userPoints.toString());
     localStorage.setItem("userTime", timeLeft.toString());
 
     // // var userScore = timeLeft + userPoints;
@@ -169,7 +200,7 @@ function quiz() {
     correctTitle.classList.add("responseClass");
     correctTitle.textContent = "Correct";
     responseDiv.append(correctTitle);
-    userPoints++;
+    // userPoints++;
   }
   function wrongAnswer() {
     responseDiv.innerText = "";
